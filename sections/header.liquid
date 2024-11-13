@@ -1,0 +1,137 @@
+{% if section.settings.show_announce_bar %}
+  <div class="announce-bar text-center w-full py-2 bg-green-300">Welcome To {{ shop.name }}</div>
+{% endif %}
+<nav x-data="{ openMobile : false}" class="w-full p-10">
+  <div class="flex justify-between px-5">
+    {% comment %} logo {% endcomment %}
+    <div>
+      <a href="/" class="text-2xl font-bold text-gray-800">
+        {% if section.settings.header_logo == '' %}
+          {{ shop.name }}
+        {% else %}
+          {{ section.settings.header_logo }}
+        {% endif -%}
+      </a>
+    </div>
+
+    {% comment %} menu {% endcomment %}
+    <div class="md:flex hidden  gap-5 ">
+      {% for link in section.settings.menu.links %}
+        {% assign link_handle = link.handle | replace: '-', '_' %}
+
+        {% if link.links != blank %}
+          <div class="m" x-data="{ {{ link_handle }} : false }">
+            <button class="flex gap-0 text-center" @click="{{ link_handle }} = ! {{ link_handle }} ">
+              {{ link.title }}
+              {% render 'dropdown-icon' %}
+            </button>
+            <ul
+              x-show="{{ link_handle }}"
+              @click.away="{{ link_handle }} = false"
+              x-transition
+              class="shadow rounded-md absolute bg-white top-30 p-3 mt-2 "
+            >
+              {% for sublink in link.links %}
+                <li class="flex-col my-1 px-5 py-3 rounded-md hover:bg-green-100 w-full">
+                  <a class="{% if sublink.active == true %} font-bold {% endif %}" href="{{ sublink.url }}" href="#">
+                    {{ sublink.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          <div class="relative items-center text-center">
+            <a class="{% if link.active == true %} font-bold {% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% comment %} cart icons {% endcomment %}
+    <div class="flex gap-2">
+      <a href="{{ routes.cart_url }}"> {% render 'cart-icon' %} </a>
+      <div class="md:hidden">
+        <button x-show="!openMobile" @click="openMobile = ! openMobile">{% render 'menu-icon' %}</button>
+        <button x-show="openMobile" @click="openMobile = ! openMobile">{% render 'close-icon' %}</button>
+      </div>
+
+      {% if shop.customer_accounts_enabled %}
+        <div class="md:flex hidden gap-2">
+          <a class="w-full inline-block" href="{{ routes.account_login_url }}"> Login </a>
+          <a class="w-full inline-block" href="{{ routes.account_register_url }}">Register </a>
+        </div>
+      {% endif %}
+     
+    </div>
+  </div>
+
+  {% comment %} =================   mobile menu {% endcomment %}
+
+  <div
+    x-transition
+    x-show="openMobile"
+    class="shadow md:flex rounded-md flex-col mx-auto items-center justify-center top-20 p-3 mt-2  w-full  bg-green-50"
+  >
+    <ul class="container mx-auto justify-items-start gap-2">
+      {% for link in section.settings.mobile_menu.links %}
+        {% assign link_handle = link.handle | replace: '-', '_' %}
+
+        {% if link.links == blank %}
+          <li class=" mt-2 p-1">
+            <a href="{{ link.url }}" class="{% if link.active == true %} font-bold {% endif %}">{{ link.title }}</a>
+          </li>
+        {% else %}
+          <li x-data="{ {{ link_handle }} : false}" class=" mt-2 p-1">
+            <button @click="{{ link_handle }} = ! {{ link_handle }}" class="flex items-center">
+              {{ link.title }}
+              {% render 'dropdown-icon' %}
+            </button>
+            <ul x-show="{{ link_handle }}">
+              {% for sublink in link.links %}
+                <li class="mt-2 pl-5">
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announce_bar",
+      "label": "Show Announce Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "header_logo",
+      "label": "Logo",
+      "default": "Logo"
+    },
+    {
+    "type": "link_list",
+    "id": "menu",
+    "label": "Desktop Menu",
+    "default": "main-menu"
+  
+  },
+  {
+  "type": "link_list",
+  "id" : "mobile_menu",
+  "label": "Mobile Menu",
+  "default" : "main-menu"
+   }
+
+
+  ]
+}
+{% endschema %}

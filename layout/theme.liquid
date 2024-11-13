@@ -11,8 +11,11 @@
     <!-- Header hook for plugins -->
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
+    <script src="//unpkg.com/alpinejs" defer></script>
+
   </head>
   <body>
+    {% section 'header' %}
     <main role="main">
       {{ content_for_layout }}
     </main>
