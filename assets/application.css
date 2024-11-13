@@ -722,6 +722,18 @@ video {
   padding: 0.75rem;
 }
 
+.p-\[\] {
+  padding: ;
+}
+
+.p-\[44px\] {
+  padding: 44px;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -735,6 +747,11 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-\[\] {
+  padding-top: ;
+  padding-bottom: ;
 }
 
 .pl-5 {

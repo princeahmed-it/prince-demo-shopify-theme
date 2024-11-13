@@ -1,7 +1,7 @@
 {% if section.settings.show_announce_bar %}
   <div class="announce-bar text-center w-full py-2 bg-green-300">Welcome To {{ shop.name }}</div>
 {% endif %}
-<nav x-data="{ openMobile : false}" class="w-full p-10">
+<nav style="padding-block: {{ section.settings.padding_bottom }}px" x-data="{ openMobile : false}" class="w-full p-5">
   <div class="flex justify-between px-5">
     {% comment %} logo {% endcomment %}
     <div>
@@ -62,7 +62,6 @@
           <a class="w-full inline-block" href="{{ routes.account_register_url }}">Register </a>
         </div>
       {% endif %}
-     
     </div>
   </div>
 
@@ -118,20 +117,25 @@
       "default": "Logo"
     },
     {
-    "type": "link_list",
-    "id": "menu",
-    "label": "Desktop Menu",
-    "default": "main-menu"
-  
-  },
-  {
-  "type": "link_list",
-  "id" : "mobile_menu",
-  "label": "Mobile Menu",
-  "default" : "main-menu"
-   }
-
-
+      "type": "link_list",
+      "id": "menu",
+      "label": "Desktop Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_menu",
+      "label": "Mobile Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding",
+      "default": 30,
+      "min": 0,
+      "max": 100
+    }
   ]
 }
 {% endschema %}
