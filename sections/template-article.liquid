@@ -9,25 +9,37 @@
           <small>
             Published at
             <time datetime="{{ article.published_at | date : "%b %d, %y" }}">
-              {{ article.published_at | date: "%b %d, %y" }}
+              {{ article.published_at | date: '%b %d, %y' }}
             </time>
           </small>
         {% endif %}
       {% when 'article_author' %}
         {% if section.settings.article_author %}
-          <p class="block"> <i>{{ article.author }} </i></p>
+          <p class="block">
+            <i>{{ article.author }} </i>
+          </p>
         {% endif %}
 
       {% when 'featured_image' %}
         {% if section.settings.featured_image %}
-          <div>
-            <img src="{{ article.image | img_url: "medium"}}" alt="{{ article.image.alt }} " height="auto" width="auto">
+          <div class="py-5 rounded-md w-full">
+            {% if article.image == blank %}
+              {% assign placeholder_image = 'lifestyle-1' %}
+              {{ placeholder_image | placeholder_svg_tag: 'w-full h-90 object-cover object-center' }}
+            {% else %}
+              <img
+                class="w-full h-[40vh] object-cover object-center"
+                src="{{ article.image | img_url: "medium"}}"
+                alt="{{ article.image.alt }} "
+                height="auto"
+                width="auto"
+              />
+            {% endif %}
           </div>
         {% endif %}
       {% when 'article_content' %}
         <article>
-            {{ article.content }}
-         
+          {{ article.content }}
         </article>
 
       {% else %}
