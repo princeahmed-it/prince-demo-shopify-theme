@@ -1,0 +1,30 @@
+<section class="justify-items-center">
+    {% render 'eoor' %}
+    <h1 class="font-bold text-6xl">{{ section.settings.headline }}</h1>
+    <p class="mt-10 font-semibold">{{  section.settings.subline  }}</p>
+    <a href="{{ shop.url }}">
+
+    <button class="bg-green-500 text-white px-5 py-2 rounded-md mt-10">Go back to homepage</button>
+    </a>
+</section>
+
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "404 Not found"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "Subline",
+      "default": "The page you were looking for does not exist"
+    }
+  ]
+}
+{% endschema %}

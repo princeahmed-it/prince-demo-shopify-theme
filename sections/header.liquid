@@ -1,14 +1,12 @@
 {% if section.settings.show_announce_bar %}
   <div class="announce-bar text-center w-full py-2 bg-green-300">Welcome To {{ shop.name }}</div>
 {% endif %}
-<nav style="padding-block: {{ section.settings.padding_bottom }}px" x-data="{ openMobile : false}" class="w-full p-5">
+<nav style="padding-block: {{ section.settings.padding_bottom }}px" x-data="{ openMobile : false}" class="w-full p-5 shadow-sm">
   <div class="flex justify-between px-5">
     {% comment %} logo {% endcomment %}
     <div>
       <a href="/" class="text-2xl font-bold text-gray-800">
-        {% if section.settings.header_logo == '' %}
-          {{ shop.name }}
-        {% else %}
+        {% if section.settings.header_logo  %}
           {{ section.settings.header_logo }}
         {% endif -%}
       </a>
