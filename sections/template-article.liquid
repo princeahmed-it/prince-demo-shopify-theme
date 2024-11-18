@@ -1,4 +1,4 @@
-<section class="justify-items-center p-10">
+<article class="justify-items-center p-10">
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'article_title' %}
@@ -33,21 +33,95 @@
                 alt="{{ article.image.alt }} "
                 height="auto"
                 width="auto"
-              />
+              >
             {% endif %}
           </div>
         {% endif %}
       {% when 'article_content' %}
-        <article>
+        <div>
           {{ article.content }}
-        </article>
+        </div>
 
       {% else %}
 
     {% endcase %}
   {% endfor %}
-</section>
+</article>
 
+{% if blog.comments_enabled? %}
+  <div id="comments" class="my-8 p-10">
+    {% if article.comments_count > 0 %}
+      <div id="comment-form" class="flex-1 max-w-7xl mx-auto items-center justify-center  p-10">
+        <h3 class="text-2xl font-semibold">See what people are saying about us</h3>
+
+        {% paginate article.comments by 5 %}
+          {% for comment in article.comments %}
+            <div class="flex-1 my-4 rounded-md px-2 py-4 border-2 border-gray-200 leading-relaxed">
+              <span class="text-md capitalize font-semibold text-gray-800">{{comment.author }}</span> | <span class="text-xs pl-2 text-gray-500">{{comment.created_at | date: format: "default" }}</span>
+              <p class="capitalize pt-2 text-gray-600">{{comment.content }}</p>
+            </div>
+            
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+
+            {{paginate | default_pagination }}
+            
+          {% endif %}
+        {% endpaginate %}
+      </div>
+
+    {% else %}
+      <h3 class="text-2xl font-semibold">There are no comments yet.</h3>
+    {% endif %}
+  </div>
+  <div id="comments-form" class="mb-8 w-full">
+    {% form 'new_comment', article %}
+      <div id="comment-form" class="flex-1 max-w-7xl mx-auto items-center justify-center  p-10">
+        <div class="p-5 flex">
+          <div class="w-1/2 items-center flex-col gap-4  p-2">
+            <label for="comment_author" class="font-thin text-gray-400 text-sm block">Name</label>
+            <input
+              name="comment[author]"
+              type="text"
+              required
+              id="comment_author"
+              class="w-full border-2 border-gray-400 p-3"
+            >
+          </div>
+          <div class="w-1/2 items-center flex-col gap-4 p-2">
+            <label for="comment_email" class="font-thin text-gray-400 text-sm block">Email</label>
+            <input
+              name="comment[email]"
+              type="email"
+              required
+              id="comment_email"
+              class="w-full border-2 border-gray-400 p-3"
+            >
+          </div>
+        </div>
+        <div class="flex p-5">
+          <div class="items-center w-full flex-col gap-4 p-2">
+            <label for="comment_content" class="font-thin text-gray-400 text-sm block">Comment</label>
+            <textarea
+              required
+              id="comment_content"
+              name="comment[body]"
+              class="w-full h-40 resize-none border-2 border-gray-400 p-3"
+            ></textarea>
+          </div>
+        </div>
+        <div id="submit-button p-5">
+          <input
+            type="submit"
+            class="w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500"
+            value="Post comment"
+          >
+        </div>
+      </div>
+    {% endform %}
+  </div>
+{% endif %}
 {% schema %}
 {
   "name": "Article Template",
