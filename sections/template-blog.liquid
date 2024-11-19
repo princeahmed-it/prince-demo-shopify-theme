@@ -1,0 +1,19 @@
+{% paginate blog.articles by 5 %}
+  <h2 class="text-center text-2xl font-semibold">{{ blog.title }}</h2>
+  <div id="blogs-container" class="flex flex-wrap w-full justify-center items-center py-5 px-3 m-5">
+    {% for article in blog.articles %}
+      <div class="min-w-1/2 p-5 ">
+        <h3 class="text-lg font-bold">
+          <a href="{{ article.url }}">{{ article.title }} </a>
+        </h3>
+        {% if article.image %}
+          <img src="{{ article.image | img_url: 'medium' }}" alt="{{ article.image.alt }}" height="auto" width="auto">
+        {% else %}
+          {% assign placeholder_image = 'lifestyle-1' %}
+          {{ placeholder_image | placeholder_svg_tag: 'size-60 object-cover object-center' }}
+        {% endif %}
+        <p>{{ article.content | strip_html | truncatewords: 30 }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endpaginate %}

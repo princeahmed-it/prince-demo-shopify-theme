@@ -1,28 +1,28 @@
-<article class="justify-items-center p-10">
+<article class="justify-items-center p-10" itemscope itemtype="http://schema.org/BlogPosting">
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'article_title' %}
-        <h1 class="font-bold text-3xl">{{ article.title }}</h1>
+        <h1 class="font-bold text-3xl" itemprop="headline">{{ article.title }}</h1>
 
       {% when 'article_date' %}
         {% if section.settings.article_date %}
           <small>
             Published at
-            <time datetime="{{ article.published_at | date : "%b %d, %y" }}">
+            <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | date : "%b %d, %y" }}">
               {{ article.published_at | date: '%b %d, %y' }}
             </time>
           </small>
         {% endif %}
       {% when 'article_author' %}
         {% if section.settings.article_author %}
-          <p class="block">
-            <i>{{ article.author }} </i>
+          <p itemscope itemtype="http://schema.org/Person" class="block">
+            <i itemprop="author">{{ article.author }} </i>
           </p>
         {% endif %}
 
       {% when 'featured_image' %}
         {% if section.settings.featured_image %}
-          <div class="py-5 rounded-md w-full">
+          <div itemprop="image" class="py-5 rounded-md w-full">
             {% if article.image == blank %}
               {% assign placeholder_image = 'lifestyle-1' %}
               {{ placeholder_image | placeholder_svg_tag: 'w-full h-90 object-cover object-center' }}
@@ -38,7 +38,7 @@
           </div>
         {% endif %}
       {% when 'article_content' %}
-        <div>
+        <div itemprop="articleBody">
           {{ article.content }}
         </div>
 
@@ -83,7 +83,6 @@
                 {% endfor %}
               </ul>
             </div>
-          
           {% endif %}
 
           {% if form.posted_successfully? %}
@@ -92,8 +91,6 @@
         </div>
 
         <div class="flex gap-2 justify-center">
-         
-
           <div class="p-1 flex-col w-full">
             <label class="text-sm block" for="comment_author">Name</label>
             <input
@@ -139,6 +136,34 @@
     </div>
   </div>
 {% endif %}
+
+<script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "articleBody": {{ article.content | strip_html | json }},
+      {% if article.excerpt != blank %}
+          "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+          "image": [
+              {{ article.image | img_url: "medium" | prepend: 'https:' | json }} 
+          ],
+      {% endif %}
+      "datePublished": {{ article.published_at | date: format: "default" | json }},
+      "dateCreated": {{ article.created_at | date: format: "default" | json }},
+      "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+      },
+      "publisher": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+      }
+  }
+  </script>
+
 
 {% schema %}
 {
