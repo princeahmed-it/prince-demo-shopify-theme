@@ -61,9 +61,10 @@
           </div>
         {% endfor %}
 
-        {% if paginate.pages > 1 %}
-          {{ paginate | default_pagination }}
-        {% endif %}
+        <div class="px-10 mb-20">
+          {% render 'pagination', pagination: paginate %}
+        </div>
+        
       {% endpaginate %}
     {% else %}
       <h3 class="font-semibold text-2xl capitalize">There is no comments yet</h3>
