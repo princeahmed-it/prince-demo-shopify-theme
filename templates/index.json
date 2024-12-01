@@ -1,0 +1,12 @@
+{
+  "name": "Homepage",
+  "sections": {
+    "featured-collections": {
+      "type": "featured-collections",
+      "settings":{
+        "featured_collection": "all"
+      }
+    }
+  },
+  "order": ["featured-collections"]
+}

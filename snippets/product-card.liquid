@@ -1,0 +1,36 @@
+<div class=" shadow border p-3 m-3 rounded-md justify-items-center">
+  <a href="{{ product_data.url }}" class="divide divide-y-2 divide-gray-400">
+    <div class="overflow-hidden">
+      {% if product_data.featured_image %}
+        <img
+          class="size-40 transition duration-1000 hover:scale-110 transform ease-in-out"
+          src="{{ product_data.featured_image | image_url }}"
+          alt="{{ product_data.featured_image.alt }}"
+          height="auto"
+          width="auto"
+        >
+
+      {% else %}
+        {{
+          'product-1'
+          | placeholder_svg_tag: 'size-40 transition duration-1000 hover:scale-110 transform ease-in-out'
+        }}
+      {% endif %}
+    </div>
+  </a>
+
+  {% if product_data %}
+    <a class="text-lg font-semibold mt-2 " href="{{ product_data.url }}">{{ product_data.title }}</a>
+
+    <span class="font-thin text-gray-600 text-center block">{{ product_data.vendor }}</span>
+
+    <p class="text-xl ">{{ product_data.price | money }}</p>
+
+  {% else %}
+    <p class="text-lg font-semibold mt-2 text-center" href="{{ product_data.url }}">Place Holder</p>
+
+    <span class="font-thin text-gray-600 text-center block">Vendor</span>
+
+    <p class="text-xl ">{{ '9999' | money }}</p>
+  {% endif %}
+</div>
