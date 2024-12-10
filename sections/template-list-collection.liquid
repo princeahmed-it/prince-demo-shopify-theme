@@ -4,7 +4,7 @@
     <div class="grid grid-cols-3 px-10 mt-5">
         {% for collection in collections %}
             {% if collection.all_products_count > 0 %}
-                <div class="m-5 flex flex-col border">
+                <div class="m-5 flex flex-col border overflow-hidden">
                     <a href="{{ collection.url }}">
                         {% if collection.featured_image != blank %}
 
@@ -14,7 +14,7 @@
                                 {% assign collection_image = collection.products.first.image %}
                         {% endif %}
 
-                        <img  class="w-full mx-auto" src="{{collection_image | img_url }}" alt="" height="auto" width="auto">
+                        <img  class="size-[200px] mx-auto transition duration-1000 object-cover ease-in-out hover:scale-105 transform" src="{{collection_image | img_url : "medium"}}" alt="" height="auto" width="auto">
     
                     </a>
     

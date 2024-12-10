@@ -1,46 +1,39 @@
-
-<h2 class="text-center text-2xl font-semibold mt-5">{{ section.settings.title}}</h2>
+<h2 class="text-center text-2xl font-semibold mt-5">{{ section.settings.title }}</h2>
 
 <div class="p-10 grid md:grid-cols-4  w-full mx-auto ">
   {% for product in section.settings.featured_collection.products limit: section.settings.products_to_show %}
     {% render 'product-card', product_data: product %}
-    
-    {% else %}
-      {% for item in (1..4) %}
-        {% render 'product-card' %}
-      {% endfor %}
+
+  {% else %}
+    {% for item in (1..4) %}
+      {% render 'product-card' %}
+    {% endfor %}
   {% endfor %}
 </div>
 
-
-
-
-
 {% schema %}
-  {
-    "settings": [
-      {
-        "type": "text",
-        "default": "Featured Collections",
-        "id": "title",
-        "label": "Collection Title"
-      },
-      {
-        "type": "collection",
-        "id": "featured_collection",
-        "label": "Collection"
-      },
-      {
+{
+  "settings": [
+    {
+      "type": "text",
+      "default": "Featured Collections",
+      "id": "title",
+      "label": "Collection Title"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
       "type": "range",
       "max": 12,
       "min": 2,
       "default": 3,
       "label": "Products to show",
       "id": "products_to_show"
-      }
-    ],
-    "presets": [
-   {   "name": "featured collections"}
-    ]
-  }
+    }
+  ],
+  "presets": [{ "name": "featured collections" }]
+}
 {% endschema %}

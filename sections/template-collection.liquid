@@ -1,5 +1,8 @@
 <div class="p-10">
   <h1 class="text-center font-bold text-2xl">{{ collection.title }}</h1>
+
+
+  <a href="{{ routes.collections_url }}" class="text-gray-500 underline text-lg text-center block my-20">Go the collections list</a>
   {% paginate collection.products by section.settings.number_of_products %}
     <div class="grid grid-cols-1 md:grid-cols-3">
       {% for product in collection.products %}
