@@ -1,0 +1,12 @@
+{
+  "name": "contact page",
+  "sections":{
+    "template":{
+      "type": "template-page"
+    },
+    "contact_form":{
+      "type":"contact-form"
+    }
+  },
+  "order": ["template", "contact_form"]
+}

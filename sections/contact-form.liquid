@@ -1,0 +1,54 @@
+<div class="py-10">
+  <h1 class="text-center text-2xl font-bold">{{ section.settings.title }}</h1>
+  {% form 'contact' %}
+    <div class="flex justify-center  gap-5">
+      <div class="block">
+        {% if form.errors %}
+          <p class="text-red-500">Error is occured</p>
+
+        {% elsif form.posted_successfull? %}
+          <p class="text-green">Successfull</p>
+        {% endif %}
+      </div>
+
+      <div class="">
+        <label class="block" for="contact-email">Name</label>
+        <input class="border border-gray-400 px-5 py-2 rounded-md" type="text" name="contact[name]" id="contact-name">
+      </div>
+      <div class="">
+        <label class="block" for="contact-name">Email</label>
+        <input
+          class="border border-gray-400 px-5 py-2 rounded-md"
+          type="email"
+          name="contact[email]"
+          id="contact-email"
+        >
+      </div>
+    </div>
+    <div class="w-full mx-auto justify-items-center mt-5">
+      <label class="block" for="contact-body">Your Message</label>
+      <textarea class="border border-gray-400 px-5 py-2 rounded-md" name="contact[body]" id="contact-body"></textarea>
+    </div>
+    <div class="flex justify-center">
+      <input class="text-center bg-black text-white rounded px-5 py-2" type="submit" placeholder="Submit Message">
+    </div>
+  {% endform %}
+</div>
+
+{% schema %}
+{
+  "name": "contact-form",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "contact-form"
+    }
+  ]
+}
+{% endschema %}
