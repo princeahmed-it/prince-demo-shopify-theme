@@ -2,7 +2,17 @@
   "name": "product template",
   "sections": {
     "template": {
-      "type": "template-product"
+      "type": "template-product",
+      "blocks":{
+        "vendor" : { "type" : "vendor"},
+        "title" : { "type" : "title"},
+        "variant_selector" : { "type" : "variant_selector"},
+        "quantity" : { "type" : "quantity"},
+        "price" : { "type" : "price"},
+        "description" : { "type" : "description"},
+        "button" : { "type" : "button"}
+      },
+      "block_order":["vendor", "title", "variant_selector", "quantitiy","price", "description", "button"]
     }
   },
   "order":["template"]
